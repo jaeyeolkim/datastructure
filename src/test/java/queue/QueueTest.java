@@ -19,5 +19,6 @@ public class QueueTest {
     // Dequeue
     // poll() 큐의 첫 번째 값 반환하고 큐에서 삭제
     System.out.println("integers = " + integers.poll());
+    System.out.println("integers.size() = " + integers.size());
   }
 }
