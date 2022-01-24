@@ -1,4 +1,4 @@
-package queue;
+package datastructure;
 
 import java.util.Stack;
 import org.junit.jupiter.api.Test;
