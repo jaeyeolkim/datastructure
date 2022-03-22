@@ -2,10 +2,13 @@ package webflux;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.reactive.result.view.Rendering;
 import reactor.core.publisher.Mono;
 import webflux.ecommerce.Cart;
 import webflux.ecommerce.CartRepository;
+import webflux.ecommerce.CartService;
 import webflux.ecommerce.ItemRepository;
 
 @Controller
@@ -13,11 +16,13 @@ public class HomeController {
 
   private final ItemRepository itemRepository;
   private final CartRepository cartRepository;
+  private final CartService cartService;
 
   public HomeController(ItemRepository itemRepository,
-      CartRepository cartRepository) {
+      CartRepository cartRepository, CartService cartService) {
     this.itemRepository = itemRepository;
     this.cartRepository = cartRepository;
+    this.cartService = cartService;
   }
 
   @GetMapping
@@ -27,5 +32,11 @@ public class HomeController {
         .modelAttribute("cart", cartRepository.findById("My Cart")
             .defaultIfEmpty(new Cart("My Cart")))
         .build());
+  }
+
+  @PostMapping("/add/{id}")
+  Mono<String> addToCart(@PathVariable String id) {
+    return this.cartService.addToCart("My Cart", id)
+        .thenReturn("redirect:/");
   }
 }

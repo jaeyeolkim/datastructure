@@ -28,4 +28,8 @@ public class CartItem {
   public void setQuantity(int quantity) {
     this.quantity = quantity;
   }
+
+  public void increment() {
+    this.quantity++;
+  }
 }
